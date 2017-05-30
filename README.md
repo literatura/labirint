@@ -1,0 +1,2 @@
+# labirint
+simple game
