@@ -1,0 +1,10 @@
+{ 
+    "level":6,
+    "chestsCount":6,
+    "startPosition":{
+        "x": 600,
+        "y": 50
+    },
+    "tiles":"tiles2",
+    "word":"soon..."
+}

@@ -1,0 +1,9 @@
+{ 
+    "level":3,
+    "chestsCount":12,
+    "startPosition":{
+        "x": 200,
+        "y": 32
+    },
+    "word":"soon..."
+}

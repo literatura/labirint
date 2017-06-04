@@ -4,13 +4,12 @@ export default class extends Phaser.Sprite {
   constructor ({ game, x, y, asset }) {
     super(game, x, y, asset)
     this.anchor.setTo(0.5)
-    this.cursors = game.input.keyboard.createCursorKeys();
+    this.cursors = game.input.keyboard.createCursorKeys() 
   }
 
   update () {	  	
   	this.body.velocity.x = 0;
     this.body.velocity.y = 0;
-    //this.angle += 1
     if (this.cursors.left.isDown)    {
         if(this.angle != 90){
         	this.angle = 90

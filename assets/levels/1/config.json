@@ -1,0 +1,13 @@
+{ 
+    "level":1,
+    "chestsCount":5,
+    "startPosition":{
+        "x": 400,
+        "y": 200
+    },
+    "endPosition":{
+        "x": 400,
+        "y": 200
+    },
+    "word":"soon..."
+}
