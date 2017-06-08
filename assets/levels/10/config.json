@@ -1,0 +1,10 @@
+{ 
+    "level":10,
+    "chestsCount":7,
+    "startPosition":{
+        "x": 35,
+        "y": 35
+    },
+    "tiles":"tiles2",
+    "word":"Сейф"
+}

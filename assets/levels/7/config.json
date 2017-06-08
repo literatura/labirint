@@ -1,0 +1,10 @@
+{ 
+    "level":7,
+    "chestsCount":7,
+    "startPosition":{
+        "x": 70,
+        "y": 720
+    },
+    "tiles":"tiles2",
+    "word":"Игла"
+}

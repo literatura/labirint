@@ -1,3 +1,45 @@
 { 
-    "levelsCount":6
+    "levelsCount":10,
+    "words":[
+        {
+            "word": "Бобер",
+            "object_id": 0
+        },
+        {
+            "word": "Гусь",
+            "object_id": 1
+        },
+        {
+            "word": "Окно",
+            "object_id": 2
+        },
+        {
+            "word": "Волк",
+            "object_id": 3
+        },
+        {
+            "word": "Игла",
+            "object_id": 4
+        },
+        {
+            "word": "Нож",
+            "object_id": 5
+        },
+         {
+            "word": "Рак",
+            "object_id": 6
+        },
+        {
+            "word": "Сейф",
+            "object_id": 8
+        },
+        {
+            "word": "Танк",
+            "object_id": 9
+        },
+        {
+            "word": "Торт",
+            "object_id": 10
+        }
+    ]
 }

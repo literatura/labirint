@@ -1,6 +1,5 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
-//import Mushroom from '../sprites/Mushroom'
 import Ship from '../sprites/Ship'
 
 export default class extends Phaser.State {
@@ -75,10 +74,21 @@ export default class extends Phaser.State {
     this.getCoinAudio = this.game.add.audio('getCoin')
     this.getChestAudio = this.game.add.audio('getChest')
     this.bgAudio = this.game.add.audio('bgAudio')
-    //this.game.sound.setDecodedCallback([ this.getCoinAudio, this.getChestAudio ], start, this);
     this.game.sound.setDecodedCallback([ this.getCoinAudio, this.getChestAudio, this.bgAudio ], this.startAudio, this)
 
     this.createTexts()
+
+    if(1==1){ // читер!!!
+      const key1 = this.game.input.keyboard.addKey(Phaser.Keyboard.ONE)
+      key1.onDown.add(
+        () => { 
+          this.score = this.levelConfig.chestsCount
+          this.getChestAudio.play()
+          console.log('well done')
+        }, 
+        this)
+      game.input.keyboard.removeKeyCapture(Phaser.Keyboard.ONE);
+    }
   }
 
   update (){
@@ -114,7 +124,6 @@ export default class extends Phaser.State {
   doFinish(player, flag){
     if(this.score >= this.levelConfig.chestsCount){
         this.bgAudio.stop()
-        console.log('WIN!!!!')
         this.state.start('MiniGame')
     }
   }
@@ -159,7 +168,7 @@ export default class extends Phaser.State {
 
   render () {
     if (__DEV__) {
-      this.game.debug.spriteInfo(this.mushroom, 32, 32)
+      //this.game.debug.spriteInfo(this.mushroom, 32, 32)
     }
   }
 }

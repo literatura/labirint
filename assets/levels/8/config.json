@@ -1,0 +1,10 @@
+{ 
+    "level":8,
+    "chestsCount":20,
+    "startPosition":{
+        "x": 1535,
+        "y": 315
+    },
+    "tiles":"tiles2",
+    "word":"Бобер"
+}

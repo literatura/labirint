@@ -1,58 +1,121 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
-//import Mushroom from '../sprites/Mushroom'
-//import Ship from '../sprites/Ship'
 
 export default class extends Phaser.State {
   init () {
-    this.score = 0
-    this.money = 0
+    this.openedChestCount = 0
+    this.objectButtons = []
+    this.chestButtons = []
+    this.failCount = 0
   }
   preload () {
-    //this.load.tilemap('tilemap', 'assets/images/maps/level1.json', null, Phaser.Tilemap.TILED_JSON);
   }
 
   create () {
-    this.game.physics.startSystem(Phaser.Physics.ARCADE)
-    this.stage.backgroundColor = '#00ff00'
+    this.add.sprite(0, 0, 'minigameBg')
 
-    this.button = game.add.button(game.world.centerX - 95, 400, 'buttonNext', this.actionOnClick, this/*, 2, 1, 0*/);
-    /*const bannerText = 'Phaser + ES6 + Webpack'
-    let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText)
-    banner.font = 'Bangers'
-    banner.padding.set(10, 16)
-    banner.fontSize = 40
-    banner.fill = '#77BFA3'
-    banner.smoothed = false
-    banner.anchor.setTo(0.5)
-
-    this.mushroom = new Mushroom({
-      game: this,
-      x: this.world.centerX,
-      y: this.world.centerY,
-      asset: 'mushroom'
-    })
-
-    this.game.add.existing(this.mushroom)*/
-
+    this.levelConfig = this.cache.getJSON('levelConfig')
+    console.log('level', this.levelConfig)
     
+    const i = 0
+    this.chestButtons.push(
+      game.add.button(game.world.centerX, this.world.centerY+200, 'chest64', () => { this.handleChestClick(i)}, this, 0, 0, 0)
+    )
+    this.chestButtons[i].scale.setTo(1.5, 1.5)
+    this.chestButtons[i].anchor.setTo(0.5)
 
+    this.desk = this.add.sprite(game.world.centerX, this.world.centerY, 'desk')
+    this.desk.anchor.setTo(0.5)
+
+    this.generateObjects()
+
+    this.missAudio = this.game.add.audio('miss')
+    this.successAudio = this.game.add.audio('getChest')
   }
 
   update (){
-    /*this.game.physics.arcade.collide(this.ship, this.layer) // проверяем столкновения спрайта персонажа с тайлами карты
-    this.game.physics.arcade.overlap(this.ship, this.chests, this.collectChests, null, this)
-    this.game.physics.arcade.overlap(this.ship, this.coins, this.collectCoins, null, this)
-    this.game.physics.arcade.overlap(this.ship, this.points, this.doFinish, null, this)*/
   }
 
-  actionOnClick () {
-    // Следующий уровень
+  generateObjects(){
+    const commonConfig = this.cache.getJSON('commonLevelConfig')
+    commonConfig.words.forEach((item) => {
+      console.log('fff', item)
+      this.objectButtons.push(
+        game.add.button(
+          this.getCoordX(), 
+          this.getCoordY(),
+          'minigameObjects', 
+          () => { this.handleObjectClick(item.word) }, 
+          this, 
+          item.object_id,
+          item.object_id,
+          item.object_id,
+          item.object_id)
+      )
+    })
+    this.failCount = 0
+    this.levelWord = commonConfig.words[game.rnd.between(0, (commonConfig.words.length-1))].word
+  }
+
+  getCoordX(){
+    let x = game.rnd.between(50, 1550)
+    // чтобы объект не оказался за доской
+    if(x > (game.world.centerX - 350) && x < (game.world.centerX + 350)){
+      x = this.getCoordX()
+    }
+    return x
+  }
+
+  getCoordY(){
+    let y = game.rnd.between(50, 750)
+    // чтобы объект не оказался за доской
+    if(y > (game.world.centerY - 80) && y < (game.world.centerY + 80)){
+      y = this.getCoordY()
+    }
+    return y
+  }
+
+  handleObjectClick(word){
+    console.log('click', word)
+    if(word == this.levelWord){
+      this.successAudio.play()
+      this.goToNextLevel()
+    }else{
+       this.missAudio.play()
+       this.failCount++
+       if(this.failCount >= 2){
+        this.goToCurrentLevel()
+       }
+    }
+  }
+
+  handleChestClick(num){
+    this.chestButtons[num].setFrames(1)
+    let word = this.add.text(game.world.centerX, this.world.centerY, this.levelWord)
+    //this.levelText.font = 'Bangers'
+    word.padding.set(10, 16)
+    word.fontSize = 50
+    word.stroke = '#333333';
+    word.strokeThickness = 7;
+    word.fill = '#FFFFFF'
+    word.smoothed = false
+    word.anchor.setTo(0.5)
+    this.openedChestCount++
+  }
+
+  goToNextLevel(){
     let level = localStorage.getItem('currentLevel')
     console.log('click', level)
     localStorage.setItem('currentLevel', ++level)
+    setTimeout(() => {
+      this.state.start('Game')
+    }, 500)    
+  }
 
-    this.state.start('Game')
+  goToCurrentLevel(){
+    setTimeout(() => {
+      this.state.start('Game')
+    }, 500) 
   }
 
   render () {
