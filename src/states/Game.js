@@ -13,7 +13,7 @@ export default class extends Phaser.State {
       level = 1
       localStorage.setItem('currentLevel', 1)
     }
-    this.load.json('levelConfig', 'http://labirint.dev/assets/levels/'+level+'/config.json')
+    this.load.json('levelConfig', 'assets/levels/'+level+'/config.json')
     this.load.tilemap('tilemap', 'assets/levels/'+level+'/map.json', null, Phaser.Tilemap.TILED_JSON)
   }
 
