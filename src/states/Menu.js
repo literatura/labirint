@@ -8,7 +8,7 @@ export default class extends Phaser.State {
     this.money = 0
   }
   preload () {
-    this.load.json('commonLevelConfig', 'http://labirint.dev/assets/levels/common.json')
+    this.load.json('commonLevelConfig', 'assets/levels/common.json')
   }
 
   create () {
