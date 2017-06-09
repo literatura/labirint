@@ -34,12 +34,6 @@ export default class extends Phaser.State {
   }
 
   actionOnClick (num) {
-    //console.log('click', num)
-    // Следующий уровень
-    /*let level = localStorage.getItem('currentLevel')
-    if(!level){
-      localStorage.setItem('currentLevel', 1)
-    } */   
     localStorage.setItem('currentLevel', num)
     this.state.start('Game')
   }

@@ -84,7 +84,6 @@ export default class extends Phaser.State {
         () => { 
           this.score = this.levelConfig.chestsCount
           this.getChestAudio.play()
-          console.log('well done')
         }, 
         this)
       game.input.keyboard.removeKeyCapture(Phaser.Keyboard.ONE);
@@ -100,23 +99,18 @@ export default class extends Phaser.State {
 
   loadLevelConfig(){
     this.levelConfig = this.cache.getJSON('levelConfig')
-    console.log('levelConfig', this.levelConfig)
   }
 
   collectChests (player, chest) {
-    // Removes the star from the screen
     chest.kill();
     this.getChestAudio.play()
-    //  Add and update the score
     this.score ++
     this.chestsText.text = 'Chests: ' + this.score
   }
 
   collectCoins(player, coin) {
-    // Removes the star from the screen
     coin.kill();
     this.getCoinAudio.play()
-    //  Add and update the score
     this.money += 10
     this.coinsText.text = 'Coins: ' + this.money    
   }

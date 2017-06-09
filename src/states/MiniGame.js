@@ -7,7 +7,6 @@ export default class extends Phaser.State {
     this.objectButtons = []
     this.chestButtons = []
     this.failCount = 0
-    console.log('momey', money)
     this.totalMoney = parseInt(localStorage.getItem('totalMoney'))
     this.totalMoney += money
     localStorage.setItem('totalMoney', this.totalMoney)
@@ -19,7 +18,6 @@ export default class extends Phaser.State {
     this.add.sprite(0, 0, 'minigameBg')
 
     this.levelConfig = this.cache.getJSON('levelConfig')
-    console.log('level', this.levelConfig)
     
     const i = 0
     this.chestButtons.push(
@@ -98,7 +96,6 @@ export default class extends Phaser.State {
   }
 
   handleObjectClick(word){
-    console.log('click', word)
     if(word == this.levelWord){
       this.successAudio.play()
       this.goToNextLevel()
@@ -127,7 +124,6 @@ export default class extends Phaser.State {
 
   goToNextLevel(){
     let level = localStorage.getItem('currentLevel')
-    console.log('click', level)
     localStorage.setItem('currentLevel', ++level)
     setTimeout(() => {
       this.state.start('Game')
