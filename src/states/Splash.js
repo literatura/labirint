@@ -37,11 +37,15 @@ export default class extends Phaser.State {
   }
 
   create () {
-    let level = localStorage.getItem('currentLevel')
-    console.log('load level', level)
+    const level = localStorage.getItem('currentLevel')
     if(!level){
       localStorage.setItem('currentLevel', 1)
     }
+    const totalMoney = localStorage.getItem('totalMoney')
+    if(!totalMoney){
+        localStorage.setItem('totalMoney', 0)
+    }
+
     this.state.start('Menu')
   }
 }

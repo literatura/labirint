@@ -2,11 +2,15 @@
 import Phaser from 'phaser'
 
 export default class extends Phaser.State {
-  init () {
+  init (money) {
     this.openedChestCount = 0
     this.objectButtons = []
     this.chestButtons = []
     this.failCount = 0
+    console.log('momey', money)
+    this.totalMoney = parseInt(localStorage.getItem('totalMoney'))
+    this.totalMoney += money
+    localStorage.setItem('totalMoney', this.totalMoney)
   }
   preload () {
   }
@@ -29,6 +33,8 @@ export default class extends Phaser.State {
 
     this.generateObjects()
 
+    this.renderMoneyText()
+
     this.missAudio = this.game.add.audio('miss')
     this.successAudio = this.game.add.audio('getChest')
   }
@@ -36,14 +42,28 @@ export default class extends Phaser.State {
   update (){
   }
 
+  renderMoneyText(){
+    let coinImage = this.add.sprite(game.world.right-120, this.world.top+50, 'coin')
+    coinImage.anchor.set(0.5)
+    this.moneyText = this.add.text(game.world.right-83, this.world.top+57, this.totalMoney)
+    this.moneyText.font = 'Bangers'
+    this.moneyText.padding.set(10, 16)
+    this.moneyText.fontSize = 20
+    this.moneyText.stroke = '#000000';
+    this.moneyText.strokeThickness = 5;
+    this.moneyText.fill = '#ffffff'
+    this.moneyText.smoothed = false
+    this.moneyText.anchor.setTo(0.5)
+  }
+
   generateObjects(){
     const commonConfig = this.cache.getJSON('commonLevelConfig')
     commonConfig.words.forEach((item) => {
-      console.log('fff', item)
+      let coord = this.getCoord()
       this.objectButtons.push(
         game.add.button(
-          this.getCoordX(), 
-          this.getCoordY(),
+          coord.x, 
+          coord.y,
           'minigameObjects', 
           () => { this.handleObjectClick(item.word) }, 
           this, 
@@ -57,21 +77,23 @@ export default class extends Phaser.State {
     this.levelWord = commonConfig.words[game.rnd.between(0, (commonConfig.words.length-1))].word
   }
 
+  getCoord(){
+    let point = {}
+    point.x = this.getCoordX()
+    point.y = this.getCoordY()
+    if(point.x > (game.world.centerX - 350) && point.x < (game.world.centerX + 350) && point.y > (game.world.centerY - 80) && point.y < (game.world.centerY + 80)){
+      point = this.getCoord()
+    }
+    return point
+  }
+
   getCoordX(){
     let x = game.rnd.between(50, 1550)
-    // чтобы объект не оказался за доской
-    if(x > (game.world.centerX - 350) && x < (game.world.centerX + 350)){
-      x = this.getCoordX()
-    }
     return x
   }
 
   getCoordY(){
     let y = game.rnd.between(50, 750)
-    // чтобы объект не оказался за доской
-    if(y > (game.world.centerY - 80) && y < (game.world.centerY + 80)){
-      y = this.getCoordY()
-    }
     return y
   }
 

@@ -124,7 +124,7 @@ export default class extends Phaser.State {
   doFinish(player, flag){
     if(this.score >= this.levelConfig.chestsCount){
         this.bgAudio.stop()
-        this.state.start('MiniGame')
+        this.state.start('MiniGame', true, false, this.money)
     }
   }
 

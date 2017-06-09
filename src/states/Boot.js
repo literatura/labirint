@@ -4,6 +4,13 @@ import WebFont from 'webfontloader'
 export default class extends Phaser.State {
   init () {
     this.stage.backgroundColor = '#EDEEC9'
+    //scaling options
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    
+    //have the game centered horizontally
+    this.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically = true;
+
     this.fontsReady = false
     this.fontsLoaded = this.fontsLoaded.bind(this)
   }
